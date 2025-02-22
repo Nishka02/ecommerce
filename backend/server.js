@@ -20,7 +20,7 @@ import { connectDB } from "./config/db.js";
 dotenv.config(); // Load environment variables
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000; // Use Render's assigned PORT
 
 // Create an HTTP server and WebSocket server
 const server = createServer(app);
@@ -62,14 +62,18 @@ app.use("/api/coupons", couponRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/analytics", analyticsRoutes);
 
+// ✅ Add Default Route to Fix "Cannot GET /" Error
+app.get("/", (req, res) => {
+  res.send("Backend is running successfully! 🚀");
+});
+
 // Connect to Database BEFORE starting the server
 const startServer = async () => {
   try {
     await connectDB(); // Ensure DB connection before starting
 
-    const PORT = process.env.PORT || 10000; // Use Render's assigned PORT
     server.listen(PORT, () => {
-      console.log(`✅ Server is running on port ${PORT}`); // Remove localhost
+      console.log(`✅ Server is running on http://localhost:${PORT} OR your Render URL`);
     });
   } catch (error) {
     console.error("❌ Error starting server:", error.message);
