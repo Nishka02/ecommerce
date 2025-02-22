@@ -67,8 +67,9 @@ const startServer = async () => {
   try {
     await connectDB(); // Ensure DB connection before starting
 
+    const PORT = process.env.PORT || 10000; // Use Render's assigned PORT
     server.listen(PORT, () => {
-      console.log(`✅ Server is running on http://localhost:${PORT}`);
+      console.log(`✅ Server is running on port ${PORT}`); // Remove localhost
     });
   } catch (error) {
     console.error("❌ Error starting server:", error.message);
