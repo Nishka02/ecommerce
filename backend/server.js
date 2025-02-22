@@ -50,7 +50,10 @@ io.on("connection", (socket) => {
 });
 
 // Middleware
-app.use(cors({ credentials: true, origin: process.env.FRONTEND_URL || "*" })); // Enable CORS
+app.use(cors({
+  origin: "*",  // Allow frontend access
+  credentials: true
+}));
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
 
